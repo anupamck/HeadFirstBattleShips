@@ -23,7 +23,7 @@ public class StartUpBustTest {
 
     @Test
     void shouldSetupGame() {
-        StartupBust game = new StartupBust();
+        StartUpBust game = new StartUpBust();
         game.setupGame();
         String stdOut = outputStreamCaptor.toString().trim();
         String goal = "Your goal is to sink three startups";
@@ -35,24 +35,34 @@ public class StartUpBustTest {
         // Should return location for each startup
     }
 
-//    @Test
-//    void shouldCheckUserGuess() {
-//        // Should return hit
-//        // Should return miss
-//        // Should return miss if hit, then repeat
-//    }
-//
-//    @Test
-//    void shouldfinishGame() {
-//        // Should return congratulations
-//        // Should return insult
-//        // Should return game-over message
-//    }
-//
-//    @Test
-//    void shouldStartPlaying() {
-//        // should prompt for user input
-//        // should accept legit input
-//    }
+    @Test
+    void shouldFinishGameWithCongratulations() {
+        StartUpBust game = new StartUpBust();
+        int numOfGuesses = 5;
+        game.setNumOfGuesses(numOfGuesses);
+        game.finishGame();
+        String endAnnouncement = "All Startups are dead! Your stock is now worthless";
+        String feedback = "It only took you " + numOfGuesses + " guesses.";
+        String optionsStatement = "You got out before your options sank.";
+        String stdOut = outputStreamCaptor.toString().trim();
+        assertTrue(stdOut.contains(endAnnouncement));
+        assertTrue(stdOut.contains(feedback));
+        assertTrue(stdOut.contains(optionsStatement));
+    }
+
+    @Test
+    void shouldFinishGameWithInsult() {
+        StartUpBust game = new StartUpBust();
+        int numOfGuesses = 20;
+        game.setNumOfGuesses(numOfGuesses);
+        game.finishGame();
+        String endAnnouncement = "All Startups are dead! Your stock is now worthless";
+        String feedback = "Took you long enough. " + numOfGuesses + " guesses.";
+        String optionsStatement = "Fish are dancing with your options";
+        String stdOut = outputStreamCaptor.toString().trim();
+        assertTrue(stdOut.contains(endAnnouncement));
+        assertTrue(stdOut.contains(feedback));
+        assertTrue(stdOut.contains(optionsStatement));
+    }
 }
 
